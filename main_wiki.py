@@ -10,7 +10,7 @@ driver.get("https://en.wikipedia.org/wiki/Main_Page")
 articles = driver.find_element(By.CSS_SELECTOR, value="#articlecount a")
 print(articles.text)
 
-
-
+all_portals = driver.find_element(By.LINK_TEXT, value="Content portals")
+all_portals.click()
 
 driver.quit()
