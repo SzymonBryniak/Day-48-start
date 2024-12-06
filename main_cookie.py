@@ -12,16 +12,21 @@ from selenium.webdriver.support.wait import WebDriverWait
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
 chrome_options.add_experimental_option("detach", True)
-chromedriver_path = "C:\webdrivers\chromedriver"  # Replace with your ChromeDriver path
 
 # Create a service object for ChromeDriver
-service = Service(chromedriver_path)
+# chromedriver_path = "C:\webdrivers\chromedriver.exe"  # causes browser mismatch
+# service = Service(chromedriver_path)
 
-# service = Service(ChromeDriverManager().install())
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(options=chrome_options, service=service)
 driver.get("http://orteil.dashnet.org/experiments/cookie/")
 # driver.implicitly_wait(2)
 # all_portals.click()
+
+
+
+
+
 
 cookie = driver.find_element(By.ID, value="cookie")
 # cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
