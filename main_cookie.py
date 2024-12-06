@@ -8,6 +8,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
+from get_chrome_driver import GetChromeDriver
+
+get_driver = GetChromeDriver()
+# get_driver.auto_download(extract=True)
+get_driver.install()
+
+
 
 chrome_options = webdriver.ChromeOptions()
 chrome_options.add_argument("--no-sandbox")
