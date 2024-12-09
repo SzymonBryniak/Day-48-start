@@ -21,7 +21,7 @@ chromedriver_autoinstaller.install()
 # get_driver.install()
 win32file._setmaxstdio(2048)
 chrome_options = webdriver.ChromeOptions()
-chrome_options.page_load_strategy = 'eager'
+chrome_options.page_load_strategy = 'none'
 chrome_options.add_experimental_option("detach", True)
 chrome_options.add_argument("--no-sandbox")
 
@@ -46,14 +46,14 @@ cookie = driver.find_element(By.ID, value="cookie")
 # cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
 buyGrandma = driver.find_element(By.ID, value="buyGrandma")
 buyFactory = driver.find_element(By.ID, value="buyFactory")
-# buyMine = driver.find_element(By.ID, value="buyMine")
-# buyShipment = driver.find_element(By.ID, value="buyShipment")
-# buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
-# buyPortal = driver.find_element(By.ID, value="buyPortal")
-# buyTime_machine = driver.find_element(By.ID, value="buyTime machine")
+buyMine = driver.find_element(By.ID, value="buyMine")
+buyShipment = driver.find_element(By.ID, value="buyShipment")
+buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
+buyPortal = driver.find_element(By.ID, value="buyPortal")
+buyTime_machine = driver.find_element(By.ID, value="buyTime machine")
 
 
-# to decorate
+
 def is_available(*args):
     greyed = "grayed" in buyGrandma.get_attribute("class")
     print(greyed)
@@ -63,6 +63,15 @@ def is_available(*args):
     print(concatenate_no_spaces)
     if greyed == False:
         buyGrandma.click()
+
+def click_decorator():
+    def inner(*args):
+        return
+
+def to_click(*args):
+    not_grayed = [f"not: {i}" if "grayed" in args[i].get_attribute("class") else f'to click: {i}' for i in range(len(args))]
+    
+    print(not_grayed)
 
 # is_available(buyGrandma)
 start_time = round(time.time())
@@ -77,7 +86,8 @@ try:
         elapsed_time = current_time - start_time
         if round(elapsed_time) % 5 == 0:
             print(elapsed_time)
-            is_available(buyGrandma)
+            # is_available(buyGrandma)
+            to_click(buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
             
         
         cookie.click()
