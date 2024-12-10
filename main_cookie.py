@@ -44,6 +44,7 @@ cookie = driver.find_element(By.ID, value="cookie")
 
 
 # cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
+buyCursor = driver.find_element(By.ID, value="buyCursor")
 buyGrandma = driver.find_element(By.ID, value="buyGrandma")
 buyFactory = driver.find_element(By.ID, value="buyFactory")
 buyMine = driver.find_element(By.ID, value="buyMine")
@@ -69,9 +70,14 @@ def click_decorator():
         return
 
 def to_click(*args):
-    not_grayed = [f"not: {i}" if "grayed" in args[i].get_attribute("class") else f'to click: {i}' for i in range(len(args))]
-    
+    # not_grayed = [f"not: {i}" if "grayed" in args[i].get_attribute("class") else f'to click: {i}' for i in range(len(args))]
+    not_grayed = [False if "grayed" in args[i].get_attribute("class") else True for i in range(len(args))]
     print(not_grayed)
+    # is_available = {x.get_attribute("id"):not_grayed[y] for x in args for y in range(len(not_grayed))}
+    is_available = {args[x].get_attribute("id"):not_grayed[y] for x in range(len(args)) for y in range(len(not_grayed))}
+    print(is_available)
+
+
 
 # is_available(buyGrandma)
 start_time = round(time.time())
@@ -87,7 +93,7 @@ try:
         if round(elapsed_time) % 5 == 0:
             print(elapsed_time)
             # is_available(buyGrandma)
-            to_click(buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
+            to_click(buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
             
         
         cookie.click()
