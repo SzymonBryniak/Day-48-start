@@ -21,7 +21,7 @@ chromedriver_autoinstaller.install()
 # get_driver.install()
 win32file._setmaxstdio(2048)
 chrome_options = webdriver.ChromeOptions()
-chrome_options.page_load_strategy = 'none'
+chrome_options.page_load_strategy = 'eager'
 chrome_options.add_experimental_option("detach", True)
 chrome_options.add_argument("--no-sandbox")
 
@@ -74,13 +74,23 @@ def to_click(*args):
     not_grayed = [False if "grayed" in args[i].get_attribute("class") else True for i in range(len(args))]
     print(not_grayed)
     # is_available = {x.get_attribute("id"):not_grayed[y] for x in args for y in range(len(not_grayed))}
-    is_available = {args[x].get_attribute("id"):not_grayed[y] for x in range(len(args)) for y in range(len(not_grayed))}
+    is_available = {args[x].get_attribute("id"):not_grayed[x] for x in range(len(args))}
     print(is_available)
 
+global modulo
+modulo = 5
 
+def elapsed_time_check(elapsed):
+    global modulo
+    if elapsed % modulo == 0:
+            print(elapsed)
+            # is_available(buyGrandma)
+            to_click(buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
+            modulo += 5
 
 # is_available(buyGrandma)
 start_time = round(time.time())
+print(start_time)
 
 try:
     while True:
@@ -90,12 +100,8 @@ try:
         # time.sleep(0.01)
         current_time = round(time.time())
         elapsed_time = current_time - start_time
-        if round(elapsed_time) % 5 == 0:
-            print(elapsed_time)
-            # is_available(buyGrandma)
-            to_click(buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
-            
-        
+        print(elapsed_time)
+        elapsed_time_check(elapsed_time)
         cookie.click()
         # Add a short delay to prevent overwhelming the browser
  
