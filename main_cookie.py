@@ -38,11 +38,9 @@ driver.get("http://orteil.dashnet.org/experiments/cookie/")
 driver.current_window_handle
 driver.implicitly_wait(2)
 
+start_time = time.time()
 
 cookie = driver.find_element(By.ID, value="cookie")
-
-
-
 # cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
 buyCursor = driver.find_element(By.ID, value="buyCursor")
 buyGrandma = driver.find_element(By.ID, value="buyGrandma")
@@ -76,20 +74,22 @@ def to_click(*args):
     # is_available = {x.get_attribute("id"):not_grayed[y] for x in args for y in range(len(not_grayed))}
     is_available = {args[x].get_attribute("id"):not_grayed[x] for x in range(len(args))}
     print(is_available)
-
+    return
 global modulo
 modulo = 5
 
 def elapsed_time_check(elapsed):
     global modulo
-    if elapsed % modulo == 0:
-            print(elapsed)
+    if elapsed % modulo == 0 and elapsed != 0:
+            print(f'elapsed: {elapsed}')
+            modulo += 5
+            # print(elapsed)
+            print(modulo)
             # is_available(buyGrandma)
             to_click(buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
-            modulo += 5
+    return
 
 # is_available(buyGrandma)
-start_time = round(time.time())
 print(start_time)
 
 try:
@@ -98,10 +98,10 @@ try:
         # wait = WebDriverWait(driver, timeout=2)
         # wait.until(lambda d : cookie.is_displayed())
         # time.sleep(0.01)
-        current_time = round(time.time())
+        current_time = time.time()
         elapsed_time = current_time - start_time
-        print(elapsed_time)
-        elapsed_time_check(elapsed_time)
+        # print(elapsed_time)
+        elapsed_time_check(round(elapsed_time))
         cookie.click()
         # Add a short delay to prevent overwhelming the browser
  
