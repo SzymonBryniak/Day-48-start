@@ -41,41 +41,67 @@ driver.implicitly_wait(2)
 start_time = time.time()
 
 cookie = driver.find_element(By.ID, value="cookie")
-# cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
-buyCursor = driver.find_element(By.ID, value="buyCursor")
-buyGrandma = driver.find_element(By.ID, value="buyGrandma")
-buyFactory = driver.find_element(By.ID, value="buyFactory")
-buyMine = driver.find_element(By.ID, value="buyMine")
-buyShipment = driver.find_element(By.ID, value="buyShipment")
-buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
-buyPortal = driver.find_element(By.ID, value="buyPortal")
-buyTime_machine = driver.find_element(By.ID, value="buyTime machine")
+
+   
+    # cookie = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.ID, "cookie")))
+
+def get_menu():
+    buyCursor = driver.find_element(By.ID, value="buyCursor")
+    buyGrandma = driver.find_element(By.ID, value="buyGrandma")
+    buyFactory = driver.find_element(By.ID, value="buyFactory")
+    buyMine = driver.find_element(By.ID, value="buyMine")
+    buyShipment = driver.find_element(By.ID, value="buyShipment")
+    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
+    buyPortal = driver.find_element(By.ID, value="buyPortal")
+    buyTime_machine = driver.find_element(By.ID, value="buyTime machine")
+    buyCursor = driver.find_element(By.ID, value="buyCursor")
+    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
+    return [buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyAlchemy, buyPortal, buyTime_machine]
+
+# buyGrandma = driver.find_element(By.ID, value="buyGrandma")
+# buyFactory = driver.find_element(By.ID, value="buyFactory")
+# buyMine = driver.find_element(By.ID, value="buyMine")
+# buyShipment = driver.find_element(By.ID, value="buyShipment")
+# buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
+# buyPortal = driver.find_element(By.ID, value="buyPortal")
+# buyTime_machine = driver.find_element(By.ID, value="buyTime machine")
+
+    # return [buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyAlchemy, buyPortal, buyTime_machine]
 
 
-
-def is_available(*args):
-    greyed = "grayed" in buyGrandma.get_attribute("class")
-    print(greyed)
-    print(buyGrandma.text)
-    find_digits = re.findall("\d", buyFactory.text)
-    concatenate_no_spaces = functools.reduce(operator.add, find_digits)
-    print(concatenate_no_spaces)
-    if greyed == False:
-        buyGrandma.click()
+# def is_available(*args):
+#     greyed = "grayed" in buyGrandma.get_attribute("class")
+#     print(greyed)
+#     print(buyGrandma.text)
+#     find_digits = re.findall("\d", buyFactory.text)
+#     concatenate_no_spaces = functools.reduce(operator.add, find_digits)
+#     print(concatenate_no_spaces)
+#     if greyed == False:
+#         buyGrandma.click()
 
 def click_decorator():
     def inner(*args):
         return
-
-def to_click(*args):
-    # not_grayed = [f"not: {i}" if "grayed" in args[i].get_attribute("class") else f'to click: {i}' for i in range(len(args))]
-    not_grayed = [False if "grayed" in args[i].get_attribute("class") else True for i in range(len(args))]
-    print(not_grayed)
-    # is_available = {x.get_attribute("id"):not_grayed[y] for x in args for y in range(len(not_grayed))}
-    is_available = {args[x].get_attribute("id"):not_grayed[x] for x in range(len(args))}
+ 
+def to_click():
+    buyCursor = driver.find_element(By.ID, value="buyCursor"),
+    buyGrandma = driver.find_element(By.ID, value="buyGrandma"),
+    buyFactory = driver.find_element(By.ID, value="buyFactory"),
+    buyMine = driver.find_element(By.ID, value="buyMine"),
+    buyShipment = driver.find_element(By.ID, value="buyShipment"),
+    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab"),
+    buyPortal = driver.find_element(By.ID, value="buyPortal"),
+    buyTime_machine = driver.find_element(By.ID, value="buyTime machine"),
+    buyCursor = driver.find_element(By.ID, value="buyCursor"),
+    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
+    menu = (buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
+    
+    not_grayed = [False if "grayed" in menu[i].get_attribute("class") else True for i in range(len(menu))]
+    is_available = {menu[x].get_attribute("id"):not_grayed[x] for x in range(len(menu))}
+    selection = [k for k, v in is_available.items() if v == True]
     print(is_available)
-    return
-global modulo
+    return selection
+
 modulo = 5
 
 def elapsed_time_check(elapsed):
@@ -83,27 +109,23 @@ def elapsed_time_check(elapsed):
     if elapsed % modulo == 0 and elapsed != 0:
             print(f'elapsed: {elapsed}')
             modulo += 5
-            # print(elapsed)
             print(modulo)
-            # is_available(buyGrandma)
-            to_click(buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
+            x = to_click()
+    
+
+def click_menu_item(item):
+    if item != None:
+        to_click = driver.find_element(By.ID, value=item[-1])
+        to_click.click()
     return
-
-# is_available(buyGrandma)
-print(start_time)
-
 try:
     while True:
-
-        # wait = WebDriverWait(driver, timeout=2)
-        # wait.until(lambda d : cookie.is_displayed())
-        # time.sleep(0.01)
+        # get_menu()
         current_time = time.time()
         elapsed_time = current_time - start_time
-        # print(elapsed_time)
-        elapsed_time_check(round(elapsed_time))
         cookie.click()
-        # Add a short delay to prevent overwhelming the browser
+        # click_menu_item(elapsed_time_check(round(elapsed_time)))
+        elapsed_time_check(round(elapsed_time))
  
 except KeyboardInterrupt:
     print("Script stopped by user.")
