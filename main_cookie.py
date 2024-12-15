@@ -84,23 +84,24 @@ def click_decorator():
         return
  
 def to_click():
-    buyCursor = driver.find_element(By.ID, value="buyCursor"),
-    buyGrandma = driver.find_element(By.ID, value="buyGrandma"),
-    buyFactory = driver.find_element(By.ID, value="buyFactory"),
-    buyMine = driver.find_element(By.ID, value="buyMine"),
-    buyShipment = driver.find_element(By.ID, value="buyShipment"),
-    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab"),
-    buyPortal = driver.find_element(By.ID, value="buyPortal"),
-    buyTime_machine = driver.find_element(By.ID, value="buyTime machine"),
-    buyCursor = driver.find_element(By.ID, value="buyCursor"),
-    buyAlchemy = driver.find_element(By.ID, value="buyAlchemy lab")
-    menu = (buyCursor, buyGrandma, buyFactory, buyMine, buyShipment, buyAlchemy, buyPortal, buyTime_machine)
-    
+    menu = [
+    driver.find_element(By.ID, value="buyCursor"),
+    driver.find_element(By.ID, value="buyGrandma"),
+    driver.find_element(By.ID, value="buyFactory"),
+    driver.find_element(By.ID, value="buyMine"),
+    driver.find_element(By.ID, value="buyShipment"),
+    driver.find_element(By.ID, value="buyAlchemy lab"),
+    driver.find_element(By.ID, value="buyPortal"),
+    driver.find_element(By.ID, value="buyTime machine"),
+    driver.find_element(By.ID, value="buyCursor"),  
+    driver.find_element(By.ID, value="buyAlchemy lab")
+    ]
+    # print(menu[4][0].get_attribute("class"))
     not_grayed = [False if "grayed" in menu[i].get_attribute("class") else True for i in range(len(menu))]
-    is_available = {menu[x].get_attribute("id"):not_grayed[x] for x in range(len(menu))}
+    is_available = {menu[x]:not_grayed[x] for x in range(len(menu))}
     selection = [k for k, v in is_available.items() if v == True]
-    print(is_available)
-    return selection
+    return selection[-1]
+    
 
 modulo = 5
 
@@ -111,7 +112,7 @@ def elapsed_time_check(elapsed):
             modulo += 5
             print(modulo)
             x = to_click()
-    
+            x.click()
 
 def click_menu_item(item):
     if item != None:
